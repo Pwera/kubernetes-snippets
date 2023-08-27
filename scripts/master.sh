@@ -41,9 +41,16 @@ then
     echo "Flannel not defined"
 else
     echo "Flannel defined: $FLANNEL_VERSION"
-    #curl https://raw.githubusercontent.com/flannel-io/flannel/v${FLANNEL_VERSION}/Documentation/kube-flannel.yml -O
+    if [ ! -e "/vagrant/backup/kube-flannel.yml" ]; then
+      curl https://raw.githubusercontent.com/flannel-io/flannel/v${FLANNEL_VERSION}/Documentation/kube-flannel.yml -O
+      cp kube-flannel.yml /vagrant/backup/kube-flannel.yml
+    else
+      cp /vagrant/backup/kube-flannel.yml .
+    fi
     #sed -i -e 's/10.244.0.0/172.16.1.0/g'  kube-flannel.yml
-    cp /vagrant/backup/kube-flannel.yml .
+    if [ "$FLANNEL_BACKEND" == "host-gw" ]; then
+      sed -i -e "s/vxlan/host-gw/g" /vagrant/backup/kube-flannel.yml
+    fi
     kubectl apply -f kube-flannel.yml
 fi
 
@@ -62,18 +69,24 @@ whoami
 mkdir -p /home/vagrant/.kube
 sudo cp -i $config_path/config /home/vagrant/.kube/
 sudo chown 1000:1000 /home/vagrant/.kube/config
-
-echo "Network interfaces"
-sudo ip a
-sudo ip link set cni0 down
-sudo ip link set flannel.1 down
-sudo ip link delete cni0
-sudo ip link delete flannel.1
-sudo systemctl restart crio
-sudo systemctl restart kubelet
-echo "Network interfaces"
-sudo ip a
 EOF
+
+#if [ ! -z "$FLANNEL_VERSION" ]
+#echo "Restart flannel & bridge interfaces"
+
+sudo -i -u vagrant bash << EOF
+  sudo ip a
+  sudo ip link set cni0 down
+  sudo ip link set flannel.1 down
+  sudo ip link delete cni0
+  sudo ip link delete flannel.1
+  sudo systemctl restart crio
+  sudo systemctl restart kubelet
+  sudo ip a
+EOF
+
+#fi
+
 
 # Install Metrics Server
 

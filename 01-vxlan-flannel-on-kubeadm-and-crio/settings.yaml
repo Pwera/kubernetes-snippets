@@ -32,9 +32,15 @@ nodes:
 software:
   box: bento/ubuntu-22.04
   #calico: 3.25.0
-  # Possible options for flannel: ["0.22.0", "0.21.[0-5]", "0.20.[0-2]", "0.19.[0-2]", "0.18.[0-1]", ...]
+  # Possible options for flannel: ["0.22.[0-2]", "0.21.[0-5]", "0.20.[0-2]", "0.19.[0-2]", "0.18.[0-1]", ... https://github.com/flannel-io/flannel/tags
   flannel: 0.22.0
+  # Possible options for flannel-backend: vxlan(default), host-gw, ipip[not implemented]
+  flannel-backend: vxlan
   # To skip the dashboard installation, set its version to an empty value or comment it out:
   dashboard: 2.7.0
   kubernetes: 1.26.1-00
+  # Possible options for k9s: v0.27.[0-4], v0.26.[0-6], v0.25.[0-21] ... https://github.com/derailed/k9s/tags
+  k9s: v0.27.4
+  # Possible options for termshark: 2.4.0, 2.3.0, 2.2.0 ... https://github.com/gcla/termshark/tags
+  termshark: 2.4.0
   os: xUbuntu_22.04
