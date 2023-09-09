@@ -50,6 +50,16 @@ else
     #sed -i -e 's/10.244.0.0/172.16.1.0/g'  kube-flannel.yml
     if [ "$FLANNEL_BACKEND" == "host-gw" ]; then
       sed -i -e "s/vxlan/host-gw/g" /vagrant/backup/kube-flannel.yml
+      # TODO: Find general solution to put --iface=eth1
+      # iface is provided because of this issue:
+      # https://github.com/flannel-io/flannel/blob/master/Documentation/troubleshooting.md#vagrant
+      # TODO: Fix this
+      sed -i  '173i \\t\t- --iface=eth1' /vagrant/backup/kube-flannel.yml
+      #export REPLACE="--iface=eth1"
+      #wget https://github.com/mikefarah/yq/releases/download/v4.35.1/yq_linux_amd64
+      #chmod +x yq_linux_amd64
+      #./yq_linux_amd64 "spec.template.spec.containers[0].args[2] = env(REPLACE)" kube-flannel.yml -i
+      #./yq_linux_amd64 ".spec.containers[0].args[2] = env(REPLACE)" kube-flannel.yml -i
     fi
     kubectl apply -f kube-flannel.yml
 fi
@@ -74,16 +84,16 @@ EOF
 #if [ ! -z "$FLANNEL_VERSION" ]
 #echo "Restart flannel & bridge interfaces"
 
-sudo -i -u vagrant bash << EOF
-  sudo ip a
-  sudo ip link set cni0 down
-  sudo ip link set flannel.1 down
-  sudo ip link delete cni0
-  sudo ip link delete flannel.1
-  sudo systemctl restart crio
-  sudo systemctl restart kubelet
-  sudo ip a
-EOF
+#sudo -i -u vagrant bash << EOF
+#  sudo ip a
+#  sudo ip link set cni0 down
+#  sudo ip link set flannel.1 down
+#  sudo ip link delete cni0
+#  sudo ip link delete flannel.1
+#  sudo systemctl restart crio
+#  sudo systemctl restart kubelet
+#  sudo ip a
+#EOF
 
 #fi
 

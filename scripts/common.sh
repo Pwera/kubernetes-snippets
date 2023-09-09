@@ -58,9 +58,8 @@ curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/
 
 sudo apt-get update
 
-
 if ! ls /vagrant/backup/archives/crio/cri-o*.deb 1>/dev/null 2>&1; then
-  sudo mkdir /vagrant/backup/archives/crio
+  sudo mkdir -p /vagrant/backup/archives/crio
   echo "No cri-o packages in cache - downloading"
   sudo apt-get download cri-o cri-o-runc conmon containers-common
   sudo cp cri-o* /vagrant/backup/archives/crio/
@@ -115,7 +114,7 @@ ${ENVIRONMENT}
 EOF
 
 if [ ! -f "/vagrant/backup/k9s" ]; then
-  sudo wget https://github.com/derailed/k9s/releases/download/$(K9S_VERSION)/k9s_Linux_amd64.tar.gz
+  sudo wget https://github.com/derailed/k9s/releases/download/$K9S_VERSION/k9s_Linux_amd64.tar.gz
   sudo tar -xzf k9s_Linux_amd64.tar.gz
   sudo mv k9s /vagrant/backup/k9s
   sudo cp /vagrant/backup/k9s /usr/local/bin
@@ -124,8 +123,8 @@ echo "/vagrant/backup/k9s exists copying into /usr/local/bin"
 sudo cp /vagrant/backup/k9s /usr/local/bin
 
 if [ ! -f "/vagrant/backup/termshark" ]; then
-  sudo wget https://github.com/gcla/termshark/releases/download/v$(TERMSHARK_VERSION)/termshark_$(TERMSHARK_VERSION)_linux_x64.tar.gz
-  sudo tar -xzf termshark_$(TERMSHARK_VERSION)_linux_x64.tar.gz --strip-components=1
+  sudo wget https://github.com/gcla/termshark/releases/download/v${TERMSHARK_VERSION}/termshark_${TERMSHARK_VERSION}_linux_x64.tar.gz
+  sudo tar -xzf termshark_${TERMSHARK_VERSION}_linux_x64.tar.gz --strip-components=1
   sudo mv termshark /vagrant/backup/termshark
 fi
 echo "/vagrant/backup/termshark exists copying into /usr/local/bin"
