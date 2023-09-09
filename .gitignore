@@ -1,5 +1,6 @@
 # General
-.vagrant/
+01-vxlan-flannel-on-kubeadm-and-crio/.vagrant/
+02-host-gw-flannel-on-kubeadm-and-crio/.vagrant/
 configs/
 backup/
 
