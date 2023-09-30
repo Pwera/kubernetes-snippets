@@ -1,0 +1,1 @@
+This script implements a Dynamic Admission Control feature, mutating Deployment tolerations by adding the desired toleration to the list. This functionality utilizes RFC 6902 JSON Patch.
