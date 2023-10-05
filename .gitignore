@@ -1,6 +1,8 @@
 # General
 01-vxlan-flannel-on-kubeadm-and-crio/.vagrant/
 02-host-gw-flannel-on-kubeadm-and-crio/.vagrant/
+03-gateway-api-with-traefik/.vagrant
+03-gateway-api-with-traefik/specific-files/certs
 configs/
 backup/
 
