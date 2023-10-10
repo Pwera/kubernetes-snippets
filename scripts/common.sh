@@ -130,5 +130,16 @@ fi
 echo "/vagrant/backup/termshark exists copying into /usr/local/bin"
 sudo cp /vagrant/backup/termshark /usr/local/bin
 
+if [ ! -f "/vagrant/backup/zellij" ]; then
+  sudo wget -c https://github.com/zellij-org/zellij/releases/download/v0.38.2/zellij-x86_64-unknown-linux-musl.tar.gz -O - | sudo tar -xz -C /vagrant/backup/ zellij
+fi
+echo "/vagrant/backup/zellij exists copying into /usr/local/bin"
+sudo cp /vagrant/backup/zellij /usr/local/bin
+
+if [ ! -f "/vagrant/backup/yq" ]; then
+  wget https://github.com/mikefarah/yq/releases/download/v4.35.1/yq_linux_amd64 -o yq
+  chmod +x yq
+fi
+
 
 echo "alias k=kubectl" >> ~/.bashrc

@@ -56,8 +56,6 @@ else
       # TODO: Fix this
       sed -i  '173i \\t\t- --iface=eth1' /vagrant/backup/kube-flannel.yml
       #export REPLACE="--iface=eth1"
-      #wget https://github.com/mikefarah/yq/releases/download/v4.35.1/yq_linux_amd64
-      #chmod +x yq_linux_amd64
       #./yq_linux_amd64 "spec.template.spec.containers[0].args[2] = env(REPLACE)" kube-flannel.yml -i
       #./yq_linux_amd64 ".spec.containers[0].args[2] = env(REPLACE)" kube-flannel.yml -i
     fi
@@ -83,7 +81,6 @@ EOF
 
 #if [ ! -z "$FLANNEL_VERSION" ]
 #echo "Restart flannel & bridge interfaces"
-
 #sudo -i -u vagrant bash << EOF
 #  sudo ip a
 #  sudo ip link set cni0 down
@@ -99,6 +96,5 @@ EOF
 
 
 # Install Metrics Server
-
 #kubectl apply -f https://raw.githubusercontent.com/techiescamp/kubeadm-scripts/main/manifests/metrics-server.yaml
 
