@@ -3,6 +3,7 @@
 02-host-gw-flannel-on-kubeadm-and-crio/.vagrant/
 03-gateway-api-with-traefik/.vagrant
 03-gateway-api-with-traefik/specific-files/certs
+04-vxlan-and-ipinip-calico/.vagrant
 configs/
 backup/
 
