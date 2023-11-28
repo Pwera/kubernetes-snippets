@@ -1,0 +1,3 @@
+- op: replace
+  path: "/spec/calicoNetwork/ipPools/0/cidr"
+  value: "10.244.0.0/16"

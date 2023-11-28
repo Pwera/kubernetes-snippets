@@ -1,0 +1,46 @@
+---
+# cluster_name is used to group the nodes in a folder within VirtualBox:
+cluster_name: Kubernetes Cluster
+# Uncomment to set environment variables for services such as crio and kubelet.
+# For example, configure the cluster to pull images via a proxy.
+# environment: |
+#   HTTP_PROXY=http://my-proxy:8000
+#   HTTPS_PROXY=http://my-proxy:8000		
+#   NO_PROXY=127.0.0.1,localhost,master-node,node01,node02,node03
+# All IPs/CIDRs should be private and allowed in /etc/vbox/networks.conf.
+network:
+  # Worker IPs are simply incremented from the control IP.
+  control_ip: 10.0.0.10
+  dns_servers:
+    - 8.8.8.8
+    - 1.1.1.1
+  pod_cidr: 10.244.0.0/16
+  service_cidr: 10.99.237.180/18
+nodes:
+  control:
+    cpu: 2
+    memory: 4096
+  workers:
+    count: 1
+    cpu: 1
+    memory: 2048
+# Mount additional shared folders from the host into each virtual machine.
+# Note that the project directory is automatically mounted at /vagrant.
+  shared_folders:
+   - host_path: specific-files
+     vm_path: /vagrant/specific-files
+software:
+  box: bento/ubuntu-22.04
+  # calico: 3.25.0
+  # Possible options for flannel: ["0.22.[0-2]", "0.21.[0-5]", "0.20.[0-2]", "0.19.[0-2]", "0.18.[0-1]", ... https://github.com/flannel-io/flannel/tags
+  # flannel: 
+  # Possible options for flannel-backend: vxlan(default), host-gw, ipip[not implemented]
+  # flannel-backend: host-gw
+  # To skip the dashboard installation, set its version to an empty value or comment it out:
+  dashboard: 2.7.0
+  kubernetes: 1.26.1-00
+  # Possible options for k9s: v0.27.[0-4], v0.26.[0-6], v0.25.[0-21] ... https://github.com/derailed/k9s/tags
+  k9s: v0.27.4
+  # Possible options for termshark: 2.4.0, 2.3.0, 2.2.0 ... https://github.com/gcla/termshark/tags
+  termshark: 2.4.0
+  os: xUbuntu_22.04

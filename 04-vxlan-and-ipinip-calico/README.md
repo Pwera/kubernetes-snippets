@@ -39,7 +39,7 @@ spec:
   ipipMode: Never
   natOutgoing: true
   nodeSelector: all()
-  vxlanMode: Always
+  vxlanMode: CrossSubnet
 
 ```
 
