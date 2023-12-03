@@ -137,9 +137,30 @@ echo "/vagrant/backup/zellij exists copying into /usr/local/bin"
 sudo cp /vagrant/backup/zellij /usr/local/bin
 
 if [ ! -f "/vagrant/backup/yq" ]; then
-  wget https://github.com/mikefarah/yq/releases/download/v4.35.1/yq_linux_amd64 -o yq
-  chmod +x yq
+  wget https://github.com/mikefarah/yq/releases/download/v4.35.1/yq_linux_amd64
+  chmod +x yq_linux_amd64
+  sudo mv yq_linux_amd64 /vagrant/backup/yq
 fi
 
+if [ -z "$COSIGN_VERSION" ]
+then
+    echo "cosign not defined"
+else
+  if [ ! -f "/vagrant/backup/cosign" ]; then
+    sudo wget https://github.com/sigstore/cosign/releases/download/v${COSIGN_VERSION}/cosign-linux-amd64
+    chmod +x cosign-linux-amd64
+    mv cosign-linux-amd64 /vagrant/backup/cosing
+  fi
+  echo "/vagrant/backup/cosign exists copying into /usr/local/bin"
+  sudo cp /vagrant/backup/cosign /usr/local/bin
+fi
+
+if [ "$INSTALL_HELM" == "true" ]; then
+  echo "Install helm"
+  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+  chmod 700 get_helm.sh
+  ./get_helm.sh
+fi
 
 echo "alias k=kubectl" >> ~/.bashrc
+

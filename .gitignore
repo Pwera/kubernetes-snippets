@@ -5,6 +5,7 @@
 03-gateway-api-with-traefik/specific-files/certs
 04-vxlan-and-ipinip-calico/.vagrant
 05-wireguard-encryption-calico/.vagrant
+21-image-signature-verification-connaisseur/.vagrant
 configs/
 backup/
 
